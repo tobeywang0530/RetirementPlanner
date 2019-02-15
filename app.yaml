@@ -4,8 +4,8 @@ threadsafe: true
 
 handlers:
 - url: /
-  static_files: RetirementPlanner/index.html
-  upload: RetirementPlanner/index.html
+  static_files: website/index.html
+  upload: website/index.html
 
 - url: /
-  static_dir: RetirementPlanner
+  static_dir: website
