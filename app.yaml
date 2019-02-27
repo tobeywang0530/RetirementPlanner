@@ -1,4 +1,4 @@
-runtime: php55
+runtime: aspnetcore
 api_version: 1
 threadsafe: true
 
