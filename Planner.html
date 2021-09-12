@@ -58,7 +58,7 @@
                         <a class="page-scroll" href="#team">Portfolio</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
+                        <a class="page-scroll" href="#funds">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -324,6 +324,7 @@
             </div>
         </div>
     </section>
+
     <section id="funds" class="bg-light-gray">
         <div class="container">
             <div class="row">
@@ -340,11 +341,11 @@
                         <p class="text-muted">您每年需要存下:NTD 100,820</p>
                         <p class="sub-title">保守型 推薦基金</p>
                         <ul class="sub-menu">
-                            <li><a href="#"></a>保守型AA基金
+                            <li><a href="#" class="fundName">國泰台灣貨幣市場基金</a>
                             </li>
-                            <li><a href="#"></a>保守型BB基金
+                            <li><a href="#" class="fundName">國泰美國短期公債ETF基金</a>
                             </li>
-                            <li><a href="#"></a>保守型CC基金
+                            <li><a href="#" class="fundName">野村鴻利基金</a>
                             </li>
                         </ul>
                     </div>
@@ -356,11 +357,11 @@
                         <p class="text-muted">您每年需要存下: NTD 212,820</p>
                         <p class="sub-title">穩健型 推薦基金</p>
                         <ul class="sub-menu">
-                            <li><a href="#"></a>穩健型AA基金
+                            <li><a href="#" class="fundName">合庫新興多重收益基金A(AUD不配息)</a>
                             </li>
-                            <li><a href="#"></a>穩健型BB基金
+                            <li><a href="#" class="fundName">復華新興市場高收益債券基金-南非幣配息</a>
                             </li>
-                            <li><a href="#"></a>穩健型CC基金
+                            <li><a href="#" class="fundName">瀚亞新興南非蘭特債券基金A類型</a>
                             </li>
                         </ul>
                     </div>
@@ -372,11 +373,11 @@
                         <p class="text-muted">您每年需要存下: NTD 722,820</p>
                         <p class="sub-title">積極型 推薦基金</p>
                         <ul class="sub-menu">
-                            <li><a href="#"></a>積極型AA基金
+                            <li><a href="#" class="fundName">國泰臺指ETF傘型基金之臺灣加權指數單日正向2倍基金</a>
                             </li>
-                            <li><a href="#"></a>積極型BB基金
+                            <li><a href="#" class="fundName">統一黑馬基金</a>
                             </li>
-                            <li><a href="#"></a>積極型CC基金
+                            <li><a href="#" class="fundName">新光台灣富貴基金</a>
                             </li>
                         </ul>
                     </div>
@@ -437,10 +438,28 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+    <!-- Liff JavaScript -->
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+
 </body>
 </html>
 <script type="text/javascript">
     var gender = "man";
+    function initializeLiff(myLiffId) {
+            liff
+                .init({
+                    liffId: myLiffId
+                })
+                .then(() => {
+                    // start to use LIFF's api
+                    initializeApp();
+                })
+                .catch((err) => {
+                });
+        }
+
+        initializeLiff('1601929123-OKnayRzW');
+
     $(function () {
         $("#txtexpentper").keyup(function () {
             if ($("#txtexpentother").val() == "")
@@ -546,6 +565,28 @@
             }
             return num;
         }
+        $('.fundName').on('click',function(){
+            sendMsg($(this).text())
+        })
+        function sendMsg(fundName)
+        {
+            fundName = '基金搜尋|'+fundName
+            //打訊息回bot
+            liff.sendMessages(
+                [{
+                    type:'text',
+                    text: fundName
+                }]
+            ).then(()=>{
+                if (liff.isInClient()) {
+                    liff.closeWindow();//關閉   
+                }
+            }).catch(function (error){
 
+                alert('Error:',error)
+            });
+
+        }
     });
+    
 </script>
